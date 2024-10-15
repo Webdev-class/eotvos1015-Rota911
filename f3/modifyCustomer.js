@@ -11,14 +11,39 @@ let customers = [
     {id:10, name:"Jonas Tungate", age:83, address:{city:"Padangulaktanding", street:"224 Manley Drive", house:49}, newsLetter: true}
 ]
 function isAddress(address) {    
-    //TODO
+    return (typeof(address.city) === 'string' && typeof(address.street) === 'string' && typeof(address.house) === 'number')
 }
 
 function isCustomer(name, age, address, newsLetter) {    
-    //TODO
+    return (
+        typeof(name) === "string" &&
+        typeof(age) === "number" &&
+        isAddress(address) &&
+        typeof(newsLetter) === "boolean"
+      )
 }
-function modifyCustomer (customer){
-    //TODO
-}
+function modifyCustomer(customer) {
+    if (!isCustomer(customer.name, customer.age, customer.address, customer.newsLetter)) return false;
+  
+    let copyCustomers = [...customers];
+    const index = copyCustomers.findIndex((cust) => cust.id === customer.id);
+  
+    if (index !== -1) {
+      const updatedCustomer = {
+        id: customer.id,
+        name: customer.name,
+        age: customer.age,
+        address: customer.address,
+        newsLetter: customer.newsLetter,
+      };
+  
+      copyCustomers[index] = updatedCustomer;
+  
+      return copyCustomers;
+    } else {
+      return false;
+    }
+  }
+  
 
 module.exports = modifyCustomer;
